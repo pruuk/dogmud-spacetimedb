@@ -1,0 +1,22 @@
+﻿# Rust
+target/
+Cargo.lock
+**/*.rs.bk
+*.pdb
+
+# SpacetimeDB
+.spacetime/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/

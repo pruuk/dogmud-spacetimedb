@@ -1,0 +1,26 @@
+[package]
+name = "dogmud-shepherds"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+
+# Multiple binary targets
+[[bin]]
+name = "region-shepherd"
+path = "src/bin/region_shepherd.rs"
+
+[[bin]]
+name = "decay-shepherd"
+path = "src/bin/decay_shepherd.rs"
+
+[dependencies]
+anyhow.workspace = true
+config = "0.15.19"
+env_logger.workspace = true
+log.workspace = true
+serde = { workspace = true, features = ["derive"] }
+serde_json.workspace = true
+spacetimedb-sdk.workspace = true
+thiserror.workspace = true
+tokio = { workspace = true, features = ["full"] }

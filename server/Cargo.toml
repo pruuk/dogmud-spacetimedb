@@ -1,0 +1,25 @@
+﻿[package]
+name = "dogmud-server"
+version.workspace = true
+edition.workspace = true
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+spacetimedb = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+log = { workspace = true }
+# Remove these lines:
+# rand = { workspace = true }
+# getrandom = { workspace = true }
+
+# Keep dogmud-common but it won't be used yet
+dogmud-common = { path = "../common" }
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+strip = true

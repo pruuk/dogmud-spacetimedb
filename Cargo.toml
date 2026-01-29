@@ -1,0 +1,27 @@
+[workspace]
+resolver = "2"
+members = ["server", "common", "shepherds", "clients/ratatui-tui"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["DOGMUD Team"]
+license = "MIT"
+
+[workspace.dependencies]
+# Shared dependencies across all crates
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tokio = { version = "1", features = ["full"] }
+anyhow = "1.0"
+thiserror = "2.0.18"
+log = "0.4"
+env_logger = "0.11"
+rand = "0.9.2"
+
+# SpacetimeDB
+spacetimedb = "1.11.3"
+spacetimedb-sdk = "1.11.3"
+
+# Add getrandom with js feature
+getrandom = { version = "0.3" }
