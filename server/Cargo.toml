@@ -1,4 +1,4 @@
-﻿[package]
+[package]
 name = "dogmud-server"
 version.workspace = true
 edition.workspace = true
@@ -16,7 +16,12 @@ log = { workspace = true }
 # getrandom = { workspace = true }
 
 # Keep dogmud-common but it won't be used yet
-dogmud-common = { path = "../common" }
+# dogmud-common = { path = "../common" }
+argon2 = "0.5.3"
+sha2 = "0.10.9"
+base64 = "0.22.1"
+rand.workspace = true
+# rand_distr = "0.5.1"
 
 [profile.release]
 opt-level = "z"
