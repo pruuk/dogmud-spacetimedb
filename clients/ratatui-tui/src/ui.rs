@@ -17,10 +17,14 @@ pub fn render_ui(f: &mut Frame, app: &AppState) {
         ])
         .split(f.size());
 
-    // Main text buffer - convert each message to a Line
+    // Main text buffer - show only the last N messages that fit
+    let available_height = chunks[0].height.saturating_sub(2) as usize; // Subtract borders
+    let start_index = app.messages.len().saturating_sub(available_height);
+
     let lines: Vec<Line> = app
         .messages
         .iter()
+        .skip(start_index) // Skip old messages to show only recent ones
         .map(|msg| Line::from(msg.as_str()))
         .collect();
 

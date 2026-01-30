@@ -1,7 +1,4 @@
 ﻿pub mod stats;
-pub mod combat;
-pub mod messages;
 
+// Only export stats (which already has these functions)
 pub use stats::*;
-pub use combat::*;
-pub use messages::*;

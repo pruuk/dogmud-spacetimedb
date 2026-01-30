@@ -204,3 +204,8 @@ pub fn create_test_entity(ctx: &ReducerContext, name: String) {
         Err(err) => log::error!("Failed to insert entity: {:?}", err),
     }
 }
+
+#[reducer]
+pub fn whoami(ctx: &ReducerContext) {
+    log::info!("Your identity is: {:?}", ctx.sender);
+}

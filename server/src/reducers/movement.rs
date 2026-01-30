@@ -118,3 +118,82 @@ pub fn move_player(ctx: &ReducerContext, direction: String) -> Result<(), String
 
     Ok(())
 }
+
+#[reducer]
+pub fn look(ctx: &ReducerContext) -> Result<(), String> {
+    let session = ctx
+        .db
+        .player_session()
+        .identity()
+        .find(&ctx.sender)
+        .ok_or("Not logged in")?;
+
+    if session.character_id == 0 {
+        return Err("No character selected".to_string());
+    }
+
+    let player = ctx
+        .db
+        .entity()
+        .id()
+        .find(&session.character_id)
+        .ok_or("Character not found")?;
+
+    let room = ctx
+        .db
+        .room()
+        .id()
+        .find(&player.room_id)
+        .ok_or("Room not found")?;
+
+    // Use unique markers for parsing
+    log::info!("<<<LOOK_START>>>");
+    log::info!("=== {} ===", room.name);
+    log::info!("{}", room.description);
+
+    // List other entities in the room
+    let entities_here: Vec<_> = ctx
+        .db
+        .entity()
+        .iter()
+        .filter(|e| e.room_id == player.room_id && e.id != player.id && e.is_alive)
+        .collect();
+
+    if !entities_here.is_empty() {
+        log::info!("You see:");
+        for entity in entities_here {
+            log::info!("  {} (ID: {})", entity.name, entity.id);
+        }
+    }
+
+    // List exits
+    let mut exits = Vec::new();
+    if room.north_exit.is_some() {
+        exits.push("north");
+    }
+    if room.south_exit.is_some() {
+        exits.push("south");
+    }
+    if room.east_exit.is_some() {
+        exits.push("east");
+    }
+    if room.west_exit.is_some() {
+        exits.push("west");
+    }
+    if room.up_exit.is_some() {
+        exits.push("up");
+    }
+    if room.down_exit.is_some() {
+        exits.push("down");
+    }
+
+    if !exits.is_empty() {
+        log::info!("Exits: {}", exits.join(", "));
+    } else {
+        log::info!("No obvious exits.");
+    }
+
+    log::info!("<<<LOOK_END>>>");
+
+    Ok(())
+}
