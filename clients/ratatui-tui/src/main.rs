@@ -1,4 +1,8 @@
-﻿use anyhow::Result;
+﻿// Server configuration - change this to your local IP for network play
+const SERVER_URL: &str = "http://localhost:3000";
+// For network play, use something like: "http://192.168.1.100:3000"
+
+use anyhow::Result;
 use crossterm::{
     event::{self, Event, KeyCode},
     execute,
@@ -98,7 +102,7 @@ async fn handle_command(cmd: &str, app: &mut AppState) -> Result<()> {
                 .args(&[
                     "call",
                     "--server",
-                    "http://localhost:3000",
+                    "SERVER_URL",
                     "dogmud",
                     "move_player",
                     direction,
@@ -138,7 +142,7 @@ async fn handle_command(cmd: &str, app: &mut AppState) -> Result<()> {
                 .args(&[
                     "call",
                     "--server",
-                    "http://localhost:3000",
+                    "SERVER_URL",
                     "dogmud",
                     "attack",
                     target_id,
@@ -183,13 +187,7 @@ async fn handle_command(cmd: &str, app: &mut AppState) -> Result<()> {
 // Separate function to avoid recursion issues
 async fn do_look(app: &mut AppState) -> Result<()> {
     let output = Command::new("spacetime")
-        .args(&[
-            "call",
-            "--server",
-            "http://localhost:3000",
-            "dogmud",
-            "look",
-        ])
+        .args(&["call", "--server", "SERVER_URL", "dogmud", "look"])
         .output()?;
 
     if output.status.success() {
